@@ -1,7 +1,6 @@
-# android-rest-client-template-master
-# Project 3 - *Name of App Here*
+# Project 3 - *Tweet Me*
 
-**Name of your app** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://developer.twitter.com/en/docs/api-reference-index).
+**Tweet Me** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://developer.twitter.com/en/docs/api-reference-index).
 
 Time spent: **28** hours spent in total
 
