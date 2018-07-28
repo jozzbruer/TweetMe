@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.codepath.apps.restclienttemplate.fragments.TweetsListFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -21,9 +22,8 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends AppCompatActivity {
 
     private TwitterClient client;
-    TweetAdapter tweetAdapter;
-    ArrayList<Tweet> tweets;
-    RecyclerView rvTweets;
+    TweetsListFragment tweetsListFragment;
+
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -40,56 +40,49 @@ public class TimelineActivity extends AppCompatActivity {
         });
 
         client = TwitterApp.getRestClient(this);
-        rvTweets = findViewById(R.id.rvTweet);
+        tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragement_timeline);
 
-       //
-        tweets = new ArrayList<>();
-        tweetAdapter = new TweetAdapter(tweets);
-
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-
-        rvTweets.setAdapter(tweetAdapter);
         populateTimeline();
-        rvTweets.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (!recyclerView.canScrollVertically(1)){
-                    if (tweets.size()>0){
-                        loadMore(tweets.get(tweets.size()-1).uid);
-                    }
-                    else {
-                        populateTimeline();
-                    }
-
-                }
-            }
-        });
+//        rvTweets.setOnScrollListener(new RecyclerView.OnScrollListener() {
+////            @Override
+////            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+////                if (!recyclerView.canScrollVertically(1)){
+////                    if (tweets.size()>0){
+////                        loadMore(tweets.get(tweets.size()-1).uid);
+////                    }
+////                    else {
+////                        populateTimeline();
+////                    }
+////
+////                }
+////            }
+////        });
     }
 
-    private void loadMore(Long id) {
-        client.loadMore(new JsonHttpResponseHandler(){
-
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                                for (int i=0;i< response.length();i++){
-                                    try {
-                                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-                                        tweets.add(tweet);
-                                        tweetAdapter.notifyItemInserted(tweets.size() - 1);
-                                    }
-                                    catch (JSONException e){
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                            }
-                        },
-                id);
-    }
+//    private void loadMore(Long id) {
+//        client.loadMore(new JsonHttpResponseHandler(){
+//
+//                            @Override
+//                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                                for (int i=0;i< response.length();i++){
+//                                    try {
+//                                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
+//                                        tweets.add(tweet);
+//                                        tweetAdapter.notifyItemInserted(tweets.size() - 1);
+//                                    }
+//                                    catch (JSONException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//
+//                            }
+//                        },
+//                id);
+//    }
 
     private void populateTimeline(){
-        tweets.clear();
-        tweetAdapter.notifyDataSetChanged();
+       // tweets.clear();
+        //tweetAdapter.notifyDataSetChanged();
         client.getHomeTimeline(new JsonHttpResponseHandler(){
 
             @Override
@@ -99,16 +92,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //Log.d("TwitterClient",response.toString());
-                for(int i=0; i<response.length(); i++){
-                    try {
-                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-                        tweets.add(tweet);
-                        tweetAdapter.notifyItemInserted(tweets.size() - 1);
-
-                    }catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                }
+                tweetsListFragment.addItems(response);
                 swipeRefreshLayout.setRefreshing(false);
             }
 
