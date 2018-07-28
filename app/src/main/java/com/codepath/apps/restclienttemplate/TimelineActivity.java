@@ -21,7 +21,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
-    private TwitterClient client;
+
     TweetsListFragment tweetsListFragment;
 
     SwipeRefreshLayout swipeRefreshLayout;
@@ -32,17 +32,17 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                populateTimeline();
-            }
-        });
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                populateTimeline();
+//            }
+//        });
 
-        client = TwitterApp.getRestClient(this);
+
         tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragement_timeline);
 
-        populateTimeline();
+
 //        rvTweets.setOnScrollListener(new RecyclerView.OnScrollListener() {
 ////            @Override
 ////            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -80,42 +80,4 @@ public class TimelineActivity extends AppCompatActivity {
 //                id);
 //    }
 
-    private void populateTimeline(){
-       // tweets.clear();
-        //tweetAdapter.notifyDataSetChanged();
-        client.getHomeTimeline(new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("TwitterClient",response.toString());
-            }
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                //Log.d("TwitterClient",response.toString());
-                tweetsListFragment.addItems(response);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("TwitterClient",responseString);
-                throwable.printStackTrace();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("TwitterClient", errorResponse.toString());
-                throwable.printStackTrace();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("TwitterClient",errorResponse.toString());
-                throwable.printStackTrace();
-            }
-        });
-
-    }
 }
