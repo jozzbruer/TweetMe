@@ -1,37 +1,23 @@
 package com.codepath.apps.restclienttemplate;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.widget.TableLayout;
+import 	android.support.design.widget.TabLayout;
 
-import com.codepath.apps.restclienttemplate.fragments.TweetsListFragment;
-import com.codepath.apps.restclienttemplate.models.Tweet;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
+import com.codepath.apps.restclienttemplate.fragments.TweetsPagerAdapter;
 
 public class TimelineActivity extends AppCompatActivity {
 
-
-    TweetsListFragment tweetsListFragment;
-
-    SwipeRefreshLayout swipeRefreshLayout;
+    //SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+       // swipeRefreshLayout = findViewById(R.id.swipeRefresh);
 //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
@@ -39,9 +25,15 @@ public class TimelineActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // Get viewPager
+        ViewPager viewPager = (ViewPager)  findViewById(R.id.viewpager);
 
-        tweetsListFragment = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragement_timeline);
+        // Set the adapter for the pager
+        viewPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(),TimelineActivity.this));
 
+        // setup the TabLayout
+        TabLayout tabLayout =  findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
 //        rvTweets.setOnScrollListener(new RecyclerView.OnScrollListener() {
 ////            @Override
