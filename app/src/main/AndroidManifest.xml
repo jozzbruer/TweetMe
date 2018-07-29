@@ -34,7 +34,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TimelineActivity" />
-        <activity android:name=".LoginFailure"></activity>
+        <activity android:name=".LoginFailure" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

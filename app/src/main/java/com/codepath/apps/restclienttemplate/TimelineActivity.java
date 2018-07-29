@@ -1,8 +1,11 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TableLayout;
 import 	android.support.design.widget.TabLayout;
 
@@ -51,7 +54,19 @@ public class TimelineActivity extends AppCompatActivity {
 ////        });
     }
 
-//    private void loadMore(Long id) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timeline_menu,menu);
+        return true;
+    }
+
+    public void onProfileView(MenuItem item) {
+        // Launch the profile view
+        Intent intent = new Intent(this,ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    //    private void loadMore(Long id) {
 //        client.loadMore(new JsonHttpResponseHandler(){
 //
 //                            @Override
