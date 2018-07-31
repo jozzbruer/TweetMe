@@ -42,12 +42,11 @@ The following **additional** features are implemented:
 
 * [ ] List anything else that you can get done to improve the app functionality!
 
-## Video Walkthrough
+## Tweet Me
 
-Here's a walkthrough of implemented user stories:
+Here's aTweet Me of implemented user stories(https://imgur.com/J9T3oIN):
 
-
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [VideoToGif](https://play.google.com/store/apps/details?id=com.kayak.studio.gifmaker).
 
 ## Notes
 
